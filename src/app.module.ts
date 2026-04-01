@@ -12,6 +12,7 @@ import { RequestService } from './request/request.service';
 import { AuthGuard } from './common/guards/auth.guard';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { FreezePipe } from './common/pipes/freeze.pipe';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 @Module({
   imports: [],
@@ -32,6 +33,10 @@ import { FreezePipe } from './common/pipes/freeze.pipe';
     {
       provide: 'APP_PIPE',
       useClass: FreezePipe,
+    },
+    {
+      provide: 'APP_FILTER',
+      useClass: HttpExceptionFilter,
     }
   ],
 })
