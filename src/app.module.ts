@@ -11,6 +11,7 @@ import { AuthenticationMiddleware } from './common/middleware/authentication.mid
 import { RequestService } from './request/request.service';
 import { AuthGuard } from './common/guards/auth.guard';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { FreezePipe } from './common/pipes/freeze.pipe';
 
 @Module({
   imports: [],
@@ -27,6 +28,10 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
       provide: 'APP_INTERCEPTOR',
       scope: Scope.REQUEST,
       useClass: LoggingInterceptor,
+    },
+    {
+      provide: 'APP_PIPE',
+      useClass: FreezePipe,
     }
   ],
 })

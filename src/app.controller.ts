@@ -1,7 +1,8 @@
-import { Controller, Get, UseGuards, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Post, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { AuthGuard } from "./common/guards/auth.guard";
 import { LoggingInterceptor } from "./common/interceptors/logging.interceptor";
+import { FreezePipe } from "./common/pipes/freeze.pipe";
 
 @Controller()
 export class AppController {
@@ -13,5 +14,11 @@ export class AppController {
     @UseInterceptors(LoggingInterceptor)
     async getHello(): Promise<string> {
         return this.appService.getHello();
+    }
+
+    @Post()
+    @UseGuards(FreezePipe)
+    examplePost(@Body(new FreezePipe()) body: any): any {
+        body.test = "32";
     }
 }
