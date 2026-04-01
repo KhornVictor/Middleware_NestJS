@@ -3,12 +3,14 @@ import {
   Module,
   NestModule,
   RequestMethod,
+  Scope,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { AuthenticationMiddleware } from './common/middleware/authentication.middleware';
 import { RequestService } from './request/request.service';
 import { AuthGuard } from './common/guards/auth.guard';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 @Module({
   imports: [],
@@ -21,6 +23,11 @@ import { AuthGuard } from './common/guards/auth.guard';
       provide: 'APP_GUARD',
       useClass: AuthGuard,
     },
+    {
+      provide: 'APP_INTERCEPTOR',
+      scope: Scope.REQUEST,
+      useClass: LoggingInterceptor,
+    }
   ],
 })
 export class AppModule implements NestModule {
